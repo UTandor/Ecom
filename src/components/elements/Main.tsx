@@ -1,26 +1,16 @@
 //@ts-nocheck
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import {
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuItem,
-  DropdownMenuContent,
-  DropdownMenu,
-} from "@/components/ui/dropdown-menu";
 import { Slider } from "@/components/ui/slider";
 import {
   ChevronUpIcon,
   MicroscopeIcon,
   Package2Icon,
   SearchIcon,
-  ShoppingBagIcon,
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import axios from "axios";
@@ -33,7 +23,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Audio, Oval } from "react-loader-spinner";
+import { Oval } from "react-loader-spinner";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const Main = () => {
   const [loading, setLoading] = useState(false);
@@ -204,8 +195,8 @@ const Main = () => {
 
                       <div className="py-4 space-y-2">
                         <div className="w-full flex justify-between ">
-                          <Label className="">$ {sliderValues[0]}</Label>
-                          <Label className="">$ {sliderValues[1]}</Label>
+                          <Label className="">Rs. {sliderValues[0]}</Label>
+                          <Label className="">Rs. {sliderValues[1]}</Label>
                         </div>
                         <Slider
                           defaultValue={[
@@ -256,42 +247,12 @@ const Main = () => {
                 </div>
               </form>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  className="rounded-full border border-gray-200 w-8 h-8 ="
-                  size="icon"
-                  variant="ghost"
-                >
-                  <img
-                    alt="Avatar"
-                    className="rounded-full"
-                    height="32"
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "32/32",
-                      objectFit: "cover",
-                    }}
-                    width="32"
-                  />
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-            <div className="flex justify-between mb-6">
+            <div className="flex justify-between mb-6 sticky top-5 z-10 space-x-4 bg-white">
               <SheetTrigger asChild>
                 <Button
-                  className="flex items-center space-x-2"
+                  className="flex w-full lg:w-1/4  items-center space-x-2"
                   variant="outline"
                 >
                   <MicroscopeIcon className="h-4 w-4" />
@@ -326,40 +287,49 @@ const Main = () => {
               {!loading ? (
                 products.map((product) => (
                   <Card
-                    className="w-full border-none shadow-sm"
+                    className="w-full p-0 border shadow-sm"
                     key={product.id}
                   >
                     <CardContent>
-                      <img
-                        alt={product.name}
-                        className="rounded-lg mb-4"
-                        height="240"
-                        src={product.image}
-                        style={{
-                          aspectRatio: "240/240",
-                          objectFit: "cover",
-                        }}
-                        width="240"
-                      />
-
-                      <h3 className="text-lg font-semibold mb-1">
-                        {product.name}
-                      </h3>
-                      <p className="text-sm text-gray-500 mb-3">
-                        {product.category}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <p className="font-semibold text-lg">
-                          {" "}
-                          ${product.price}
-                        </p>
-                        <Button
-                          className="mr-4 ml-auto"
-                          variant={"outline"}
-                          size="sm"
+                      <div className="w-full flex justify-between items-center">
+                        <div
+                          className="rounded-t-lg w-full mb-4"
+                          style={{
+                            position: "relative",
+                            width: "100%",
+                            paddingTop: "100%", // 1:1 aspect ratio, adjust as needed
+                            overflow: "hidden",
+                          }}
                         >
-                          <ShoppingBagIcon />
-                        </Button>
+                          <LazyLoadImage
+                            alt={product.name}
+                            className="absolute top-0 left-0 w-full h-full"
+                            src={product.imgSrc}
+                            loading="eager" // Set to "eager" for immediate loading
+                            style={{
+                              objectFit: "cover",
+                              filter: "blur(20px)",
+                              transition: "filter 0.5s ease",
+                            }}
+                            onLoad={(event) => {
+                              event.target.style.filter = "none";
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col ml-4">
+                        <h3 className="text-lg font-semibold mb-1">
+                          {product.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 mb-3">
+                          {product.category}
+                        </p>
+                        <div className="mb-2">
+                          <p className="font-semibold text-lg">
+                            Rs. {product.price}
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
