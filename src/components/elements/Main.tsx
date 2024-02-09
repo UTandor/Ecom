@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -32,8 +33,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Audio, Oval } from "react-loader-spinner";
 
 const Main = () => {
+  const [loading, setLoading] = useState(false);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState<string[] | null>([]);
   const [prices, setPrices] = useState<number[] | null>([]);
@@ -47,6 +51,7 @@ const Main = () => {
   const [sortType, setSortType] = useState("featured");
 
   const fetchData = async () => {
+    setLoading(true);
     const response = await axios.get(
       "https://coveee.netlify.app/.netlify/functions/api/products"
     );
@@ -63,6 +68,7 @@ const Main = () => {
       ...response.data.products.map((product) => product.price)
     );
     setSliderValues([minPrice, maxPrice]);
+    setLoading(false);
   };
 
   const handleResetFilters = () => {
@@ -317,40 +323,61 @@ const Main = () => {
               </Select>
             </div>
             <div className="grid gap-6 md:gap-8 grid-cols-2 md:grid-cols-3  lg:grid-cols-5">
-              {products.map((product) => (
-                <Card className="w-full border-none shadow-sm" key={product.id}>
-                  <CardContent>
-                    <img
-                      alt={product.name}
-                      className="rounded-lg mb-4"
-                      height="240"
-                      src={product.image}
-                      style={{
-                        aspectRatio: "240/240",
-                        objectFit: "cover",
-                      }}
-                      width="240"
-                    />
+              {!loading ? (
+                products.map((product) => (
+                  <Card
+                    className="w-full border-none shadow-sm"
+                    key={product.id}
+                  >
+                    <CardContent>
+                      <img
+                        alt={product.name}
+                        className="rounded-lg mb-4"
+                        height="240"
+                        src={product.image}
+                        style={{
+                          aspectRatio: "240/240",
+                          objectFit: "cover",
+                        }}
+                        width="240"
+                      />
 
-                    <h3 className="text-lg font-semibold mb-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-sm text-gray-500 mb-3">
-                      {product.category}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <p className="font-semibold text-lg"> ${product.price}</p>
-                      <Button
-                        className="mr-4 ml-auto"
-                        variant={"outline"}
-                        size="sm"
-                      >
-                        <ShoppingBagIcon />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <h3 className="text-lg font-semibold mb-1">
+                        {product.name}
+                      </h3>
+                      <p className="text-sm text-gray-500 mb-3">
+                        {product.category}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="font-semibold text-lg">
+                          {" "}
+                          ${product.price}
+                        </p>
+                        <Button
+                          className="mr-4 ml-auto"
+                          variant={"outline"}
+                          size="sm"
+                        >
+                          <ShoppingBagIcon />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <div className="flex flex-col mx-auto  w-screen justify-center items-center space-y-4">
+                  <Oval
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#000000"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    secondaryColor="#ffffff"
+                  />
+                  <h1 className="font-semibold text-lg">Loading...</h1>
+                </div>
+              )}
             </div>
           </main>
         </div>
