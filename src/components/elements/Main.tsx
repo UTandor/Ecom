@@ -111,7 +111,6 @@ const Main = () => {
         break;
     }
 
-    console.log(apiUrl);
     const response = await axios.get(apiUrl);
     setProducts(response.data.products);
   };
@@ -249,10 +248,10 @@ const Main = () => {
             </div>
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
-            <div className="flex justify-between mb-6 sticky top-5 z-10 space-x-4 bg-white">
+            <div className="flex  justify-between mb-6 sticky top-5 z-10 space-x-4">
               <SheetTrigger asChild>
                 <Button
-                  className="flex w-full lg:w-1/4  items-center space-x-2"
+                  className="flex w-full lg:w-1/2  items-center space-x-2"
                   variant="outline"
                 >
                   <MicroscopeIcon className="h-4 w-4" />
@@ -287,37 +286,39 @@ const Main = () => {
               {!loading ? (
                 products.map((product) => (
                   <Card
-                    className="w-full p-0 border shadow-sm"
+                    className="w-full   hover:cursor-pointer group p-0 border shadow-sm"
                     key={product.id}
                   >
                     <CardContent>
                       <div className="w-full flex justify-between items-center">
-                        <div
-                          className="rounded-t-lg w-full mb-4"
-                          style={{
-                            position: "relative",
-                            width: "100%",
-                            paddingTop: "100%", // 1:1 aspect ratio, adjust as needed
-                            overflow: "hidden",
-                          }}
-                        >
+                        <div className="rounded-t-lg  relative   items-center overflow-hidden pt-[100%] w-full mb-4">
                           <LazyLoadImage
                             alt={product.name}
-                            className="absolute top-0 left-0 w-full h-full"
+                            className="absolute  transition-all duration-300 ease-in-out top-0 left-0 -z-5 bg-cover w-full h-full"
                             src={product.imgSrc}
-                            loading="eager" // Set to "eager" for immediate loading
+                            loading="lazy"
+                            id={`image-${product.id}`}
                             style={{
                               objectFit: "cover",
                               filter: "blur(20px)",
                               transition: "filter 0.5s ease",
                             }}
                             onLoad={(event) => {
-                              event.target.style.filter = "none";
+                              event.target.style.filter = "blur(0px)";
+                            }}
+                            onMouseOver={(e) => {
+                              e.target.style.filter = "blur(10px)";
+                            }}
+                            onMouseOut={(e) => {
+                              e.target.style.filter = "blur(0px)";
                             }}
                           />
+                          <Button 
+                          className="transform translate-y-20 opacity-0 mb-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out absolute bottom-0 w-[95%] left-2 right-2 ">
+                            Quick View
+                          </Button>
                         </div>
                       </div>
-
                       <div className="flex flex-col ml-4">
                         <h3 className="text-lg font-semibold mb-1">
                           {product.name}
