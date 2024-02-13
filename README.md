@@ -1,30 +1,37 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Cove
+Cove is a web application that provides a user-friendly interface with filtering and sorting functionality. It leverages MongoDB for its database, Express for the backend, and Netlify for serverless Lambda function deployment. The frontend is built using React, with Tailwind CSS for styling and Shadcn for enhanced visual effects.
 
-Currently, two official plugins are available:
+# Features
+Filtering and Sorting: Cove allows users to efficiently filter and sort data, providing a seamless experience when navigating through the site.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ MongoDB Integration: The application utilizes MongoDB as its database, ensuring robust and scalable data storage and retrieval.
 
-## Expanding the ESLint configuration
+ Express Backend: Cove's backend is powered by Express, a flexible and minimalist Node.js web application framework, providing a solid foundation for handling server-side operations.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+ Serverless Deployment with Netlify: Leveraging Netlify, Cove is deployed as serverless Lambda functions, ensuring scalability, reliability, and cost-effectiveness.
 
-- Configure the top-level `parserOptions` property like this:
+ React Frontend with Tailwind CSS: The frontend is developed using React, a popular JavaScript library for building user interfaces. Tailwind CSS is employed for easy and efficient styling, resulting in a clean and responsive design.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+ Shadcn for Frontend Enhancements: Shadcn is used to enhance the visual appeal of the frontend, providing captivating and dynamic user experiences.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Getting Started
+To run Cove locally, follow these steps:
+
+#### Clone the repository: 
+```bash git clone https://github.com/your-username/cove.git```
+Install dependencies: 
+```bash cd covee && npm install```
+
+### Configure MongoDB: Update the MongoDB connection settings in the backend code.
+Start the development server: ```bash npm start ```
+### Deployment
+Cove is designed for serverless deployment using Netlify. Connect your Netlify account to the repository and configure the deployment settings as needed. Netlify will automatically handle the deployment process whenever changes are pushed to the main branch.
+
+## Technologies Used
+2. MongoDB
+3. Express
+4. React
+5. Tailwind CSS
+6. Shadcn
+7. Netlify
