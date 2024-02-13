@@ -8,4 +8,4 @@
   to = "/.netlify/functions/api/:splat"
 
 [build]
-  functions = "functions"
+  functions = "./backend/functions"

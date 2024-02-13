@@ -1,5 +1,6 @@
 //@ts-nocheck
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -40,6 +41,10 @@ const Main = () => {
   const [isOpen1, setIsOpen1] = useState(true);
   const [isOpen2, setIsOpen2] = useState(true);
   const [sortType, setSortType] = useState("featured");
+
+  const [quickViewItem, setQuickViewItem] = useState<number | null>(null);
+
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     setLoading(true);
@@ -113,6 +118,14 @@ const Main = () => {
 
     const response = await axios.get(apiUrl);
     setProducts(response.data.products);
+  };
+
+  const handleQuickView = (id: number) => {
+    setQuickViewItem(id);
+  };
+
+  const handleProductView = (id: number) => {
+    navigate(`/products/${id}`);
   };
 
   useEffect(() => {
@@ -286,7 +299,8 @@ const Main = () => {
               {!loading ? (
                 products.map((product) => (
                   <Card
-                    className="w-full   hover:cursor-pointer group p-0 border shadow-sm"
+                    className="w-full hover:cursor-pointer group p-0 border shadow-sm"
+                    onClick={() => handleProductView(product.id)}
                     key={product.id}
                   >
                     <CardContent>
@@ -313,8 +327,10 @@ const Main = () => {
                               e.target.style.filter = "blur(0px)";
                             }}
                           />
-                          <Button 
-                          className="transform translate-y-20 opacity-0 mb-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-in-out absolute bottom-0 w-[95%] left-2 right-2 ">
+                          <Button
+                            onClick={() => handleQuickView(product.id)}
+                            className="transform translate-y-20 opacity-0 mb-2 group-hover:opacity-100 group-hover:translate-y-0   transition-all duration-300 ease-in-out absolute bottom-0 w-[95%] left-2 right-2 "
+                          >
                             Quick View
                           </Button>
                         </div>
