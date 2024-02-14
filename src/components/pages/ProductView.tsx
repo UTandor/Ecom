@@ -1,4 +1,4 @@
-//@tsignore
+//@ts-nocheck
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -240,14 +240,14 @@ const ProductView = () => {
                       >
                         <span className="sr-only">View</span>
                       </Link>
-                        <img
-                          alt={p.name}
-                          className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden group-hover:scale-105 transition-transform translate-y-0.5 dark:border-gray-800"
-                          height={250}
-                          src={p.imgSrc}
-                          width={250}
-                        />
-                      
+                      <img
+                        alt={p.name}
+                        className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden group-hover:scale-105 transition-transform translate-y-0.5 dark:border-gray-800"
+                        height={250}
+                        src={p.imgSrc}
+                        width={250}
+                      />
+
                       <div className="grid gap-1">
                         <h3 className="font-semibold tracking-tight-2line-2line-2line">
                           {p.name}
