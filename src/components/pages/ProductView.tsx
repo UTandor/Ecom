@@ -30,14 +30,14 @@ const ProductView = () => {
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <>
       <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b bg-primary-foreground px-6 /40">
         <div className="w-full flex-row justify-between"></div>
       </header>
-      <div className="grid md:grid-cols-2 items-start max-w-6xl px-4 mx-auto gap-6 lg:gap-12 py-6">
+      <div className="grid md:grid-cols-2 h-screen items-start max-w-6xl px-4 mx-auto gap-6 lg:gap-12 py-6">
         <div className="grid gap-4 md:gap-10 items-start">
           <div className="grid gap-4">
             <h1 className="font-bold text-3xl lg:text-4xl">{product.name}</h1>
