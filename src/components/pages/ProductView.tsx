@@ -222,28 +222,40 @@ const ProductView = () => {
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
-            {products.map((p) => (
-              <div className="flex flex-col items-start gap-2 relative group">
-                <Link className="absolute inset-0 z-10" to="#">
-                  <span className="sr-only">View</span>
-                </Link>
-                <img
-                  alt={p.imgSrc}
-                  className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden group-hover:scale-105 transition-transform translate-y-0.5 dark:border-gray-800"
-                  height={250}
-                  src="/placeholder.svg"
-                  width={250}
-                />
-                <div className="grid gap-1">
-                  <h3 className="font-semibold tracking-tight-2line-2line-2line">
-                    Sporty Sneakers
-                  </h3>
-                  <p className="font-semibold tracking-tight-2line-2line-2line">
-                    $99
-                  </p>
-                </div>
-              </div>
-            ))}{" "}
+            {products
+              .sort(() => Math.random() - Math.random())
+              .slice(0, 4)
+              .map(
+                (p) =>
+                  p !== product && (
+                    <div
+                      key={p.id}
+                      className="flex flex-col items-start gap-2 relative group"
+                    >
+                      <Link
+                        className="absolute inset-0 z-10"
+                        to={`/products/${p.id}`}
+                      >
+                        <span className="sr-only">View</span>
+                      </Link>
+                      <img
+                        alt={p.name}
+                        className="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden group-hover:scale-105 transition-transform translate-y-0.5 dark:border-gray-800"
+                        height={250}
+                        src={p.imgSrc}
+                        width={250}
+                      />
+                      <div className="grid gap-1">
+                        <h3 className="font-semibold tracking-tight-2line-2line-2line">
+                          {p.name}
+                        </h3>
+                        <p className="font-semibold tracking-tight-2line-2line-2line">
+                          Rs. {p.price}
+                        </p>
+                      </div>
+                    </div>
+                  )
+              )}{" "}
           </div>
         </div>
       </div>
