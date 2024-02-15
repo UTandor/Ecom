@@ -42,9 +42,7 @@ const Main = () => {
   const [isOpen2, setIsOpen2] = useState(true);
   const [sortType, setSortType] = useState("featured");
 
-  const [quickViewItem, setQuickViewItem] = useState<number | null>(null);
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     setLoading(true);
@@ -118,10 +116,6 @@ const Main = () => {
 
     const response = await axios.get(apiUrl);
     setProducts(response.data.products);
-  };
-
-  const handleQuickView = (id: number) => {
-    setQuickViewItem(id);
   };
 
   const handleProductView = (id: number) => {
@@ -327,12 +321,6 @@ const Main = () => {
                               e.target.style.filter = "blur(0px)";
                             }}
                           />
-                          <Button
-                            onClick={() => handleQuickView(product.id)}
-                            className="transform translate-y-20 opacity-0 mb-2 group-hover:opacity-100 group-hover:translate-y-0   transition-all duration-300 ease-in-out absolute bottom-0 w-[95%] left-2 right-2 "
-                          >
-                            Quick View
-                          </Button>
                         </div>
                       </div>
                       <div className="flex flex-col ml-4">
