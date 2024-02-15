@@ -221,7 +221,7 @@ const ProductView = () => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col mx-auto  w-screen justify-center items-center space-y-4">
+        <div className="flex flex-col mx-auto mt-32 w-screen justify-center items-center space-y-4">
           <Oval
             visible={true}
             height="80"
@@ -281,20 +281,7 @@ const ProductView = () => {
             </div>
           </div>
         </div>
-      ) : (
-        <div className="flex flex-col mx-auto  w-screen justify-center items-center space-y-4">
-          <Oval
-            visible={true}
-            height="80"
-            width="80"
-            color="#000000"
-            ariaLabel="oval-loading"
-            wrapperStyle={{}}
-            secondaryColor="#ffffff"
-          />
-          <h1 className="font-semibold text-lg">Loading...</h1>
-        </div>
-      )}
+      ) : null}
     </>
   );
 };
